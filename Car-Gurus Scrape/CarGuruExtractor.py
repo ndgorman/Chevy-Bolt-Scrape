@@ -31,13 +31,6 @@ class CarGuruExtractor():
             soup = self.browser.get_page_content(page)
             results.extend(soup)
 
-        
         return results
 
-
-zipC = 98225
-radius = 150
-carId = 'd2397'
-cgs = CarGuruExtractor(zipC, radius, carId)
-soup = cgs.get_pages()
 

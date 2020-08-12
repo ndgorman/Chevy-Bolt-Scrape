@@ -19,8 +19,12 @@ class CarGuruListingsUrl():
 
         self.current_page += 1
 
-        return self.return_url()
+        return self.return_url_of_current_page()
 
-    def return_url(self):
+    def link_to_listing(self, listingId):
+
+        return self.baseUrl + f'#listing={listingId}'
+
+    def return_url_of_current_page(self):
 
         return self.baseUrl + f'#resultsPage={self.current_page}'
