@@ -1,5 +1,7 @@
+import time
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup
 
 
@@ -14,6 +16,7 @@ class CarBrowser():
     def get_page_content(self, url):
         
         self.driver.get(url)
+        time.sleep(15)
         soup = BeautifulSoup(self.driver.page_source, 'html.parser')
         
         return soup

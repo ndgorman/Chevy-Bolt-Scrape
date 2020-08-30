@@ -26,15 +26,16 @@ class CarGuruParser():
     @staticmethod
     def parse_listing_to_object(soup: BeautifulSoup, urlObj: CarGuruListingsUrl):
 
-        carName = soup.find("div", class_="_4BPaqe").h4.text
-        carPrice = soup.find("div", class_="_4SFkcZ").text
-        mileage = soup.find("div", class_="qUF2aQ").text
-        dealLocale = soup.find("p" , class_="qUF2aQ").text
-        phoneNumber = soup.find("button","_4wsjoT").find("div").text
-        
         listingRef = soup.find("a", class_ ="JtRSix _5ef8K2")["href"]
         listingId = listingRef.split("=")[-1]
-
         url = urlObj.link_to_listing(listingId)
+        
+        carName = next(soup.find("div", class_="_4BPaqe").find('h4').stripped_strings)
+        
+        value_or_none = lambda x: x.text if x else None
+        carPrice = value_or_none(soup.find("span", class_="_4SFkcZ"))
+        mileage =  value_or_none(soup.find("p", class_="qUF2aQ"))
+        dealLocale =  value_or_none(soup.find("div" , class_="_66MGoB"))
+        phoneNumber =  value_or_none(soup.find("button","_4wsjoT").find("div"))
 
         return CarListing(carName, carPrice, phoneNumber, dealLocale, mileage, url)

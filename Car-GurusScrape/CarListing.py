@@ -5,7 +5,7 @@ class CarListing():
         self.name = name
         self.price = price
         self.phone = phone
-        self.location = location,
+        self.location = location
         self.mileage = mileage
         self.listingUrl = listingUrl
 
@@ -15,5 +15,5 @@ class CarListing():
 
     def to_dictionary(self):
 
-        return {"Name": self.name, "Price": self.price, "Milege": self.mileage, 
-                "Phone": self.phone, "Location": self.location, "URL": self.listingUrl}
+        return {"car_name": self.name, "price": self.price, "mileage": self.mileage, 
+                "phone": self.phone, "location": self.location, "url": self.listingUrl}

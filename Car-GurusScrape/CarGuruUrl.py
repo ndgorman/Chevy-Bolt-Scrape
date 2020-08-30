@@ -15,6 +15,7 @@ class CarGuruListingsUrl():
 
         self.baseUrl = baseUrl + configurableUrl
 
+
     def increment_page(self):
 
         self.current_page += 1

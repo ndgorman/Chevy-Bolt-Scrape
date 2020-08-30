@@ -11,7 +11,7 @@ class CarGuruExtractor():
 
         self.crawlUrl = CarGuruListingsUrl(zipCode, radius, carId)
         self.browser = CarBrowser()
-        basePage = self.browser.get_page_content(self.crawlUrl.return_url())
+        basePage = self.browser.get_page_content(self.crawlUrl.baseUrl)
         numberOfPages = int(CarGuruParser.get_max_pages(basePage))
 
         if maxResults:
@@ -24,13 +24,22 @@ class CarGuruExtractor():
     def get_pages(self):
 
         results = []
-        pages = [self.crawlUrl.increment_page() for url in range(2, self.maxResults)]
+        
+        for _ in range(0,self.maxResults):
 
-        for page in pages:
-
+            page = self.crawlUrl.return_url_of_current_page()
             soup = self.browser.get_page_content(page)
-            results.extend(soup)
+            listings = CarGuruParser.get_car_listings(soup)
+            cars = [self.process_non_empty_listing(car) for car in listings]
+            results.extend(cars)
+            
+            self.crawlUrl.increment_page()
 
-        return results
+        return [x for x in results if x]
 
+    def process_non_empty_listing(self, listing):
 
+        if len(list(listing)):
+            return CarGuruParser.parse_listing_to_object(listing, self.crawlUrl)
+        else:
+            pass
